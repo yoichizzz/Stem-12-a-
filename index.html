@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STEM 12 A's CUSTOM CUP CO.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --brand: #0B6E4F;
+      --accent: #FF6F61;
+      --muted: #6b6b6b;
+      --card: #ffffff;
+      --radius: 12px;
+      --max-width: 1100px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-size: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(180deg, #f5f7f8 0%, #ffffff 100%);
+      color: #222;
+      line-height: 1.5;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    header {
+      background: linear-gradient(90deg, var(--brand), #0a7a5a);
+      color: white; padding: 1rem;
+      box-shadow: 0 6px 18px rgba(9, 30, 30, 0.12);
+    }
+    .topbar {
+      max-width: var(--max-width); margin: auto;
+      display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    }
+    .brand { display: flex; gap: 0.8rem; align-items: center; }
+    .logo {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; background: white; color: var(--brand); font-size: 1rem;
+    }
+    h1 { margin: 0; font-size: clamp(1rem, 2vw, 1.2rem); }
+    .tag { font-size: clamp(0.75rem, 1.8vw, 0.85rem); opacity: 0.9; }
+    nav.primary { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    nav.primary a {
+      color: white; text-decoration: none; font-weight: 600;
+      padding: 0.5rem 0.75rem; border-radius: 8px; transition: background 0.18s;
+      font-size: 0.9rem;
+    }
+    nav.primary a:hover { background: rgba(255, 255, 255, 0.08); }
+    .container { max-width: var(--max-width); margin: auto; padding: 1rem; }
+    .hero {
+      display: grid; grid-template-columns: 1fr 420px; gap: 1rem; align-items: start;
+    }
+    .hero-card {
+      background: white; border-radius: var(--radius); padding: 1.2rem;
+      box-shadow: 0 8px 28px rgba(11, 110, 79, 0.06);
+    }
+    .cta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .btn {
+      padding: 0.6rem 1rem; border-radius: 10px; border: none;
+      cursor: pointer; font-weight: 700; background: var(--brand);
+      color: white; font-size: 0.9rem;
+    }
+    .btn.secondary {
+      background: transparent; color: var(--brand); border: 1px solid var(--brand);
+    }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;
+    }
+    .card {
+      background: var(--card); border-radius: 14px; overflow: hidden;
+      display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .card-body {
+      padding: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .product-title { font-size: 1rem; font-weight: 700; margin: 0; }
+    .product-desc { font-size: 0.85rem; color: var(--muted); }
+    .price-row {
+      margin-top: auto; display: flex; justify-content: space-between; align-items: center;
+    }
+    .price { color: var(--brand); font-weight: 800; }
+    footer {
+      background: #f8f9fa; padding: 1rem; font-size: 0.8rem;
+    }
+    .footer-inner {
+      max-width: var(--max-width); margin: auto;
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+    }
+    .modal {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(10,10,10,0.45); padding: 28px;
+    }
+    .modal.open {
+      display: block;
+    }
+    .modal-card {
+      max-width: 900px; background: white; margin: 40px auto;
+      border-radius: 12px; padding: 20px;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
+      max-height: 80vh; overflow: auto;
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      nav.primary { justify-content: center; gap: 0.25rem; }
+      .btn { flex: 1; text-align: center; }
+      .hero-card { padding: 1rem; }
+    }
+
+    /* CUSTOMIZATION STYLES */
+    .custom-preview {
+      position: relative;
+      width: 180px;
+      height: 300px;
+      margin: auto;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .custom-overlay {
+      position: absolute;
+      inset: 0;
+      opacity: 0.4;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+    .custom-sticker {
+      position: absolute;
+      width: 80px;
+      pointer-events: none;
+    }
+    #kuromiImg { top: 20px; left: 50%; transform: translateX(-50%); }
+    #kittyImg { bottom: 20px; left: 50%; transform: translateX(-50%); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">S12</div>
+      <div>
+        <h1>STEM 12 A's CUSTOM CUP CO.</h1>
+        <div class="tag">Customized tumblers made with care • Local & worldwide shipping</div>
+      </div>
+    </div>
+    <nav class="primary">
+      <a href="#products">Products</a>
+      <a href="#how">How It Works</a>
+      <a href="#policy" onclick="showTermsModal()">Policies</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="hero-card">
+      <h2>Make it yours — custom tumblers for every story</h2>
+      <p class="muted">From school clubs to corporate giveaways, STEM 12 A's Custom Cup Co. crafts durable tumblers that keep drinks cold or hot and showcase your design.</p>
+      <div class="cta">
+        <button class="btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Tumblers</button>
+        <button class="btn secondary" onclick="showTermsModal()">View Policies</button>
+      </div>
+    </div>
+    <div>
+      <img src="https://images.unsplash.com/photo-1600180758898-55e9b4b7a5aa?q=80&w=1600" alt="Sample tumbler">
+    </div>
+  </section>
+
+  <section id="products">
+  <h3>Featured Tumblers</h3>
+  <div class="products-grid">
+    <article class="card">
+      <img src="https://i0.wp.com/baremugs.com/wp-content/uploads/20oz-Classic-scaled.jpg" alt="">
+      <div class="card-body">
+        <h4 class="product-title">Classic Stainless 20oz</h4>
+        <p class="product-desc">Durable, low-sweat finish. Perfect for logos.</p>
+        <div class="price-row">
+          <div class="price">₱420</div>
+         <button class="btn" onclick="customize('Classic Stainless 20oz', 'https://i0.wp.com/baremugs.com/wp-content/uploads/20oz-Classic-scaled.jpg')">Customize</button>
+
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://tse3.mm.bing.net/th/id/OIP.B8D35ZrFie-l9aQ6Zd7yuQHaHa?pid=Api&P=0&h=180" alt="">
+      <div class="card-body">
+        <h4 class="product-title">Classic 30oz Tumbler</h4>
+        <p class="product-desc">Large capacity, durable stainless steel. Keeps drinks hot or cold.</p>
+        <div class="price-row">
+          <div class="price">₱520</div>
+          <button class="btn" onclick="customize('Classic 30oz Tumbler', 'https://tse3.mm.bing.net/th/id/OIP.B8D35ZrFie-l9aQ6Zd7yuQHaHa?pid=Api&P=0&h=180')">Customize</button>
+
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="https://images.ctfassets.net/wm1n7oady8a5/2ItyHuRFn93wjeOldoveKe/67554d90c53dc7e5577a0f60cf2f7d90/pinnaclerecycledtraveltumblerwithstraw40oz_white.png?q=75&h=1250&w=1250&fm=jpg&fit=pad" alt="">
+      <div class="card-body">
+        <h4 class="product-title">Classic 40oz</h4>
+        <p class="product-desc">Compact and sleek, perfect for everyday use.</p>
+        <div class="price-row">
+          <div class="price">₱380</div>
+          <button class="btn" onclick="customize('Classic 40oz', 'https://images.ctfassets.net/wm1n7oady8a5/2ItyHuRFn93wjeOldoveKe/67554d90c53dc7e5577a0f60cf2f7d90/pinnaclerecycledtraveltumblerwithstraw40oz_white.png?q=75&h=1250&w=1250&fm=jpg&fit=pad')">Customize</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div style="font-weight:800">STEM 12 A's CUSTOM CUP CO.</div>
+      <div class="small muted">Quality tumblers • Custom prints</div>
+    </div>
+    <div class="muted small">© <span id="year"></span> STEM 12 A's CUSTOM CUP CO. • All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Terms Modal -->
+<div id="termsModal" class="modal">
+  <div class="modal-card">
+    <h2>Terms & Conditions — STEM 12 A's CUSTOM CUP CO.</h2>
+    <p><strong>Business introduction</strong></p>
+    <p class="muted">STEM 12 A's Custom Cup Co. specializes in custom-printed stainless steel tumblers for personal, educational, and corporate use. We value clear communication, quality control, and timely delivery. These Terms ("Terms") describe your rights and responsibilities when ordering from us.</p>
+    <h3>Payment Policy</h3>
+    <ul class="muted">
+      <li>Accepted methods: major credit/debit cards, bank transfer, GCash, PayMaya, PayPal, and COD when offered.</li>
+      <li>Full payment or deposit required before production begins. Bulk orders require 50% deposit.</li>
+      <li>Refunds subject to payment processor timelines and production costs incurred.</li>
+      <li>We may decline or cancel orders suspected to be fraudulent.</li>
+    </ul>
+    <h3>Shipping & Delivery Policy</h3>
+    <ul class="muted">
+      <li>Production time: 3–7 business days for small orders, 7–14 days for large runs after approval.</li>
+      <li>Shipping time depends on carrier and location; tracking provided.</li>
+      <li>Shipping costs calculated at checkout; free shipping promos may exclude remote areas.</li>
+      <li>We are not responsible for delays caused by carriers, customs, or incorrect addresses.</li>
+      <li>Report damage/missing items within 48 hours with photos.</li>
+    </ul>
+    <h3>Correctness of Information</h3>
+    <ul class="muted">
+      <li>We try to ensure product info is accurate but variations may occur.</li>
+      <li>You must own or have rights to any artwork provided.</li>
+      <li>We may refuse orders if price or info errors occur; we will contact you if so.</li>
+    </ul>
+    <h3>Design Proofs & Approval</h3>
+    <ul class="muted">
+      <li>We provide digital proofs; production starts after written approval.</li>
+      <li>Post-approval changes may incur extra charges and delays.</li>
+    </ul>
+    <h3>Disclaimer & Limitation of Liability</h3>
+    <ul class="muted">
+      <li>Products are sold "as is." Minor imperfections that don't affect use are not defects.</li>
+      <li>Our liability is limited to the purchase price of the product.</li>
+    </ul>
+    <h3>Intellectual Property</h3>
+    <ul class="muted">
+      <li>You warrant you own or are licensed to use any content you upload.</li>
+      <li>We may refuse to print copyrighted/trademarked material without authorization.</li>
+    </ul>
+    <h3>Privacy & Communications</h3>
+    <ul class="muted">
+      <li>We collect only necessary info to process orders and provide service.</li>
+      <li>By ordering you agree to receive order-related communications.</li>
+    </ul>
+    <h3>Acceptance</h3>
+    <p class="muted">By using this site or placing an order, you agree to these Terms and our Privacy Policy. If you do not agree, do not use this site.</p>
+    <div class="modal-actions">
+      <button class="btn" onclick="acceptTerms()">I Agree</button>
+      <button class="btn secondary" onclick="rejectTerms()">I Do Not Agree</button>
+    </div>
+  </div>
+</div>
+
+<!-- Customize Modal -->
+<div id="customModal" class="modal">
+  <div class="modal-card">
+    <h2>Customize Your Tumbler</h2>
+    <p><strong id="productName"></strong></p>
+
+    <!-- CUSTOMIZATION PREVIEW START -->
+    <div class="custom-preview" id="preview" style="
+      background-image: url('https://i0.wp.com/baremugs.com/wp-content/uploads/20oz-Classic-scaled.jpg');
+    ">
+      <div class="custom-overlay" id="colorOverlay" style="background-color: silver;"></div>
+      <img src="https://upload.wikimedia.org/wikipedia/en/5/56/KuromiSanrio.png"
+           id="kuromiImg" class="custom-sticker" style="display:none;" alt="Kuromi">
+      <img src="https://upload.wikimedia.org/wikipedia/en/3/36/Hello_Kitty_Character_Poster.png"
+           id="kittyImg" class="custom-sticker" style="display:none;" alt="Hello Kitty">
+    </div>
+    <!-- CUSTOMIZATION PREVIEW END -->
+
+    <label for="colorSelector">Select Color:</label>
+    <select id="colorSelector" class="btn secondary" onchange="updatePreviewColor()">
+      <option value="silver">Silver</option>
+      <option value="black">Black</option>
+      <option value="pink">Pink</option>
+      <option value="white">White</option>
+    </select>
+
+    <div style="margin: 1rem 0;">
+      <label><input type="checkbox" id="kuromiSticker" onchange="toggleStickers()"> Add Kuromi Sticker</label><br>
+      <label><input type="checkbox" id="helloKittySticker" onchange="toggleStickers()"> Add Hello Kitty Sticker</label>
+    </div>
+
+    <div id="summaryBox" style="border-top:1px solid #ccc; margin-top:1rem; padding-top:1rem;">
+      <h4>Customization Summary</h4>
+      <p><strong>Tumbler:</strong> <span id="summaryTumbler">–</span></p>
+      <p><strong>Color:</strong> <span id="summaryColor">–</span></p>
+      <p><strong>Kuromi Sticker:</strong> <span id="summaryKuromi">–</span></p>
+      <p><strong>Hello Kitty Sticker:</strong> <span id="summaryKitty">–</span></p>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="fakeCheckout('add')">Add to Cart</button>
+      <button class="btn secondary" onclick="fakeCheckout('purchase')">Purchase</button>
+      <button class="btn secondary" onclick="closeCustomizeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Warning Modal -->
+<div id="warningModal" class="modal">
+  <div class="modal-card">
+    <h2>Warning: Illegitimate Ordering Interface</h2>
+    <p>This is a demonstration only. Always ensure you're ordering from verified shops. Be cautious of scam websites.</p>
+    <div class="modal-actions">
+      <button class="btn" onclick="warningModal.classList.remove('open');document.body.style.overflow=''">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  const termsModal = document.getElementById('termsModal');
+  const customModal = document.getElementById('customModal');
+  const warningModal = document.getElementById('warningModal');
+  const productNameEl = document.getElementById('productName');
+
+  window.addEventListener('load', () => {
+    if (!localStorage.getItem('stem12AcceptedTerms')) {
+      termsModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  function showTermsModal() {
+    termsModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function acceptTerms() {
+    localStorage.setItem('stem12AcceptedTerms', 'yes');
+    termsModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function rejectTerms() {
+    localStorage.removeItem('stem12AcceptedTerms');
+    termsModal.classList.remove('open');
+    document.body.style.overflow = '';
+    alert('You must accept the Terms & Conditions before placing an order.');
+  }
+
+  function customize(name, imageUrl) {
+  if (!localStorage.getItem('stem12AcceptedTerms')) {
+    showTermsModal();
+    return;
+  }
+  productNameEl.textContent = name;
+  document.getElementById('summaryTumbler').textContent = name;
+  document.getElementById('colorSelector').value = 'silver';
+  document.getElementById('summaryColor').textContent = 'Silver';
+  document.getElementById('kuromiSticker').checked = false;
+  document.getElementById('helloKittySticker').checked = false;
+  document.getElementById('kuromiImg').style.display = 'none';
+  document.getElementById('kittyImg').style.display = 'none';
+
+  // Set background image based on selected product
+  document.getElementById('preview').style.backgroundImage = `url('${imageUrl}')`;
+
+  updatePreviewColor();
+  customModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+  function closeCustomizeModal() {
+    customModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function updatePreviewColor() {
+    const color = document.getElementById('colorSelector').value;
+    document.getElementById('colorOverlay').style.backgroundColor = color;
+    document.getElementById('summaryColor').textContent = color.charAt(0).toUpperCase() + color.slice(1);
+  }
+
+  function toggleStickers() {
+    const kuromiChecked = document.getElementById('kuromiSticker').checked;
+    const kittyChecked = document.getElementById('helloKittySticker').checked;
+    document.getElementById('kuromiImg').style.display = kuromiChecked ? 'block' : 'none';
+    document.getElementById('kittyImg').style.display = kittyChecked ? 'block' : 'none';
+    document.getElementById('summaryKuromi').textContent = kuromiChecked ? 'Yes' : 'No';
+    document.getElementById('summaryKitty').textContent = kittyChecked ? 'Yes' : 'No';
+  }
+
+  function fakeCheckout(action) {
+    closeCustomizeModal();
+    setTimeout(() => {
+      warningModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
